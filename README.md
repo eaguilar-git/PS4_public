@@ -1,1 +1,3 @@
-# PS4_public
+# PS4
+
+See `PS4.pdf` for assignment details. 
