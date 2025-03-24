@@ -49,7 +49,7 @@ The report combines descriptive statistics, visualizations, and regression analy
 ### 1.	COVID-19 Deaths
 The outcome variable—COVID-19 deaths in 2022—was constructed using cumulative death counts reported by the New York Times. Since the dataset provides cumulative totals over time, I calculated the number of deaths that occurred specifically during 2022 by taking the difference between the maximum and minimum cumulative death counts recorded for each county that year. This method isolates new deaths within the calendar year without requiring daily-level data and avoids double-counting, making it a straightforward and reliable way to extract annual totals. To allow meaningful comparisons across counties of different sizes, I scaled this figure to reflect deaths per 100,000 residents using 2019 U.S. Census population estimates.
 
-The distribution of deaths is highly skewed: while a small number of counties experienced extremely high mortality, most saw relatively modest totals. Summary statistics show that COVID-19 deaths in 2022 ranged from `r min(covid$deaths, na.rm = TRUE)` to `r max(covid$deaths, na.rm = TRUE)`, with a mean of `r round(mean(covid$deaths, na.rm = TRUE), 1)`, median of `r median(covid$deaths, na.rm = TRUE)`, and first and third quartiles at `r quantile(covid$deaths, 0.25, na.rm = TRUE)` and `r quantile(covid$deaths, 0.75, na.rm = TRUE)`, respectively. These figures highlight both the wide variation in pandemic impact across counties and the importance of using log transformations or per capita adjustments in the analysis.
+The distribution of deaths is highly skewed: while a small number of counties experienced extremely high mortality, most saw relatively modest totals. Summary statistics show that COVID-19 deaths in 2022 ranged from `r min(covid$deaths, na.rm = TRUE)` to `r max(covid$deaths, na.rm = TRUE)`, with a mean of `r round(mean(covid$deaths, na.rm = TRUE), 1)`, median of `r median(covid$deaths, na.rm = TRUE)`, and first and third quartiles at `r quantile(covid$deaths, 0.25, na.rm = TRUE)` and `r quantile(covid$deaths, 0.75, na.rm = TRUE)`, respectively. These figures highlight the wide variation in pandemic impact across counties.
 
 ```{r covid_death, echo=FALSE, fig.width=10, fig.height=4, dpi=300}
 
@@ -98,7 +98,7 @@ annotate(
 ```
 
 ### 2.	Mask Usage
-The primary behavioral variable—mask usage—was measured using county-level survey data collected in July 2020 by Dynata in partnership with The New York Times. The dataset captures the percentage of county residents who reported “always” wearing a mask in public, serving as a proxy for local adherence to public health guidelines during the early stages of the pandemic. The distribution of mask usage rates varies widely across counties. Summary statistics show that reported “always masking” ranged from `r round(min(covid$always.mask, na.rm = TRUE) * 100, 1)`% to `r round(max(covid$always.mask, na.rm = TRUE) * 100, 1)`%, with a mean of `r round(mean(covid$always.mask, na.rm = TRUE) * 100, 1)`%, median of `r round(median(covid$always.mask, na.rm = TRUE) * 100, 1)`%, and interquartile range from `r round(quantile(covid$always.mask, 0.25, na.rm = TRUE) * 100, 1)`% to `r round(quantile(covid$always.mask, 0.75, na.rm = TRUE) * 100, 1)`%. These figures reflect both regional variation and differing levels of compliance with non-pharmaceutical interventions across the United States.
+The primary behavioral variable—mask usage—was measured using county-level survey data collected in July 2020 by Dynata in partnership with The New York Times. The dataset captures the percentage of county residents who reported “always” wearing a mask in public, serving as a proxy for local adherence to public health guidelines during the early stages of the pandemic. The distribution of mask usage rates varies widely across counties. Summary statistics show that reported “always masking” ranged from `r round(min(covid$always.mask, na.rm = TRUE) * 100, 1)`% to `r round(max(covid$always.mask, na.rm = TRUE) * 100, 1)`%, with a mean of `r round(mean(covid$always.mask, na.rm = TRUE) * 100, 1)`%, median of `r round(median(covid$always.mask, na.rm = TRUE) * 100, 1)`%, and interquartile range from `r round(quantile(covid$always.mask, 0.25, na.rm = TRUE) * 100, 1)`% to `r round(quantile(covid$always.mask, 0.75, na.rm = TRUE) * 100, 1)`%. 
 
 ```{r mask_use, echo=FALSE, fig.width=10, fig.height=4, dpi=300}
 
@@ -191,7 +191,7 @@ annotate(
 )
 ```
 
-The boxplot shows that COVID-19 vaccination completion rates tend to be lower in counties with higher social vulnerability. Counties in category A, the least vulnerable group, have the highest median vaccination rates, while those in category D, the most vulnerable, have the lowest. While there is some overlap between the groups, the general pattern suggests that vaccination coverage decreases as social vulnerability increases. This points to ongoing challenges in reaching more vulnerable communities with vaccination efforts.
+The boxplot shows that COVID-19 vaccination completion rates tend to be lower in counties with higher social vulnerability. Counties in category A, the least vulnerable group, have the highest median vaccination rates, while those in category D, the most vulnerable, have the lowest. While there is some overlap between the groups, the general pattern suggests that vaccination coverage decreases as social vulnerability increases. 
 
 ```{r vaccination_group, echo=FALSE, fig.width=10, fig.height=4, dpi=300}
 
@@ -216,7 +216,7 @@ covid %>%
   )
 ```
 
-The county-level vaccination data further illustrate the wide range of public health outcomes across the United States. The ten counties with the highest completion rates—each reporting 95%—include Apache County (Arizona), Imperial County (California), and McKinley County (New Mexico), reflecting the upper end of national vaccination coverage. In contrast, counties such as Slope County (North Dakota), Cameron Parish (Louisiana), and McCone County (Montana) reported some of the lowest vaccination rates, ranging from just 11.3% to 22.4%. These examples highlight the extremes of the distribution and reinforce the importance of local-level analysis to understand disparities in pandemic response and vaccine uptake across the country.
+The county-level vaccination data further illustrate the wide range of public health outcomes across the United States. The ten counties with the highest completion rates—each reporting 95%—include Apache County (Arizona), Imperial County (California), and McKinley County (New Mexico), reflecting the upper end of national vaccination coverage. In contrast, counties such as Slope County (North Dakota), Cameron Parish (Louisiana), and McCone County (Montana) reported some of the lowest vaccination rates, ranging from just 11.3% to 22.4%. These examples highlight the extremes of the distribution. 
 
 Together, these variables provide a comprehensive picture of the local burden of COVID-19 and the behavioral and structural factors that may explain differences in outcomes across the United States.
 
@@ -243,7 +243,7 @@ reg_table %>%
   row_spec(0, bold = TRUE)
 ```
 
-Together, these variables provide a comprehensive picture of how behavioral and structural factors influenced the local burden of COVID-19 across U.S. counties. The wide variation in deaths, mask usage, and vaccination rates—especially when viewed alongside social vulnerability—reveals the multifaceted nature of the pandemic’s impact and the importance of place-based strategies in public health response.
+Mask use and vaccination were strongly associated with lower COVID-19 death rates, highlighting the effectiveness of individual behaviors in reducing transmission. However, structural factors—as shown by social vulnerability variables such as poverty, access to healthcare, and housing instability—also played a significant role in shaping local outcomes. The impact of the pandemic varied widely across states and demographic groups, reflecting deep-rooted inequities in exposure, resources, and resilience. Together, these variables provide a comprehensive picture of how behavioral and structural factors influenced the burden of COVID-19 across U.S. counties, emphasizing the need for place-based, equity-driven public health strategies.
 
 # Appendix: Replication code
 ```{r ref.label=knitr::all_labels(), echo=TRUE, eval=FALSE}
